@@ -11,7 +11,8 @@ class Links
     ary = Parser.new(@url).run
     p ary
     ary.each { |a|
-    	code = HTTParty.get(a).code
+    	response = HTTParty.get(a)
+    	code = response.code
     	case 
 	    	when code < 300
 	    		puts code.to_s.green + "\t" + a
@@ -19,8 +20,9 @@ class Links
 	    		puts code.to_s.yellow + "\t" + a 
 	    	else
 	    		puts code.to_s.red + "\t" + a 
-	    	end
+	    end
 	}
+	
   end
 
 end

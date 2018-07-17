@@ -29,7 +29,7 @@ class Parser
 		    tag['src']
 		  end}.compact
 
-		 relatives = urls.map{|link| (link =~ /^\// || link =~ /^\#/)  ? URI.join(@url,link).to_s : link} # .select{|link| !link =~ /^http/}\s
+		 relatives = urls.map{|link| link =~ /^http/  ?  link : URI.join(@url,link).to_s} # (link =~ /^\// || link =~ /^\#/)
 		 links = relatives.uniq
 	end
 end
