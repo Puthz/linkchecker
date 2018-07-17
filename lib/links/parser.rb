@@ -8,7 +8,7 @@ class Parser
 	def run 
 		doc = Nokogiri::HTML(HTTParty.get(@url))
 
-		urls = doc.search('a,link,frame,iframe,script,source,track')
+		urls = doc.search('a,img,link,frame,iframe,script,source,track')
 		.map{ |tag| 
 		  case tag.name
 		  when 'a'
