@@ -4,7 +4,7 @@ class LinkChecker
 
   def initialize(url)
     @url = url
-    p url
+    puts url.to_s.yellow
   end
 
   def run
