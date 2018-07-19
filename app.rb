@@ -6,7 +6,7 @@ require_relative 'lib/linkchecker/parser'
 
 Bundler.require(:default)
 
-if __FILE__ == $0 
-   LinkChecker.new(ARGV[0]).run
- # Parser.new.run
+if $PROGRAM_NAME == __FILE__
+  p LinkChecker.new(ARGV[0]).run
+  # Parser.new.run
 end

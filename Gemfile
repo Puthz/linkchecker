@@ -1,7 +1,8 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "httparty"
-gem "nokogiri"
-gem "colorize"
-gem "webmock"
-gem "rspec"
+gem 'colorize'
+gem 'httparty'
+gem 'nokogiri'
+gem 'rspec'
+gem 'rubocop', require: false
+gem 'webmock'
