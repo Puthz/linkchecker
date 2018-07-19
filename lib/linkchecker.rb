@@ -3,13 +3,13 @@ require_relative 'linkchecker/parser'
 class LinkChecker
   def initialize(url)
     @url = url
+    @parser = Parser.new(@url).run
+    @arr_codes = []
     puts url.to_s.yellow
   end
 
   def run
-    arr = Parser.new(@url).run
-    arr_codes = [] # for test purpose
-    arr.each do |a|
+    @parser.each do |a|
       code = HTTParty.get(a).code
       if code < 300
         puts code.to_s.green + "\t" + a
@@ -18,8 +18,8 @@ class LinkChecker
       else
         puts code.to_s.red + "\t" + a
       end
-      arr_codes << code
+      @arr_codes << code
     end
-    arr_codes
+    @arr_codes
   end
 end

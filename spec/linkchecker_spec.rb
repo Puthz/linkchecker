@@ -23,11 +23,6 @@ describe LinkChecker do
     WebMock.stub_request(:get, error)
            .to_return(status: %w[404 Missing])
 
-    # FakeWeb.register_uri(:get, @parse.to_s, :body =>
-    # FakeWeb.register_uri(:get, @working.to_s, :body => "Hello World!")
-    # FakeWeb.register_uri(:get, @error.to_s,
-    #   :body => "Not found", :status => ["404", "Missing"])
-
     context 'within html w/ working and broked links, respectively,' do
       it 'returning the status code from them' do
         bool = LinkChecker.new(parse).run == [200, 404]

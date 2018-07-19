@@ -1,14 +1,14 @@
 class Parser
   def initialize(url)
     @url = url
-    # @url = 'https://slack.com/'
+    @attr = 'a,img,link,frame,iframe,script,source,track'.freeze
   end
 
   def run
     doc = Nokogiri::HTML(HTTParty.get(@url))
-    tags = doc.search('a,img,link,frame,iframe,script,source,track')
+    tags = doc.search(@attr)
     urls = filter(tags)
-    relatives(urls)
+    join(urls)
   end
 
   def filter(tags)
@@ -22,7 +22,7 @@ class Parser
     end .compact
   end
 
-  def relatives(urls)
+  def join(urls)
     urls.map { |link| link =~ /^http/ ? link : URI.join(@url, link).to_s }.uniq
   end
 end
