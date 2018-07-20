@@ -13,9 +13,9 @@ describe LinkChecker do
     parse = 'http://parse.link/'
     working = 'http://up.link/'
     error = 'http://down.link/'
-    html1 = '<a href="http://up.link">Working Link</a>
-             <a href="http://down.link">Broked Link</a>'
-
+    html1 = '<a href="http://up.link/">Working Link</a>
+             <a href="http://down.link/">Broked Link</a>'
+    test1 = [{ url: working, code: 200 }, { url: error, code: 404 }]
     WebMock.stub_request(:get, parse)
            .to_return(body: html1, status: 200)
     WebMock.stub_request(:get, working)
@@ -25,8 +25,9 @@ describe LinkChecker do
 
     context 'within html w/ working and broked links, respectively,' do
       it 'returning the status code from them' do
-        bool = LinkChecker.new(parse).run == [200, 404]
-        expect(bool).to be true
+        checker = LinkChecker.new(parse).run
+        expect(checker.size).to eq(2)
+        expect(checker).to match_array(test1)
       end
     end
   end

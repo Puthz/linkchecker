@@ -1,12 +1,13 @@
 class Parser
+  @@elem = 'a,img,link,frame,iframe,script,source,track'.freeze
+
   def initialize(url)
     @url = url
-    @attr = 'a,img,link,frame,iframe,script,source,track'.freeze
   end
 
   def run
     doc = Nokogiri::HTML(HTTParty.get(@url))
-    tags = doc.search(@attr)
+    tags = doc.search(@@elem)
     urls = filter(tags)
     join(urls)
   end
