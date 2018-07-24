@@ -1,3 +1,6 @@
+require "httparty"
+require "nokogiri"
+
 class Parser
   @@elem = 'a,img,link,frame,iframe,script,source,track'.freeze
 
@@ -6,16 +9,21 @@ class Parser
   end
 
   def run
+    return [] if @url.nil?
+
     doc = Nokogiri::HTML(HTTParty.get(@url))
     tags = doc.search(@@elem)
     urls = filter(tags)
     join(urls)
   end
 
+  private
+
   def filter(tags)
     tags.map do |tag|
       case tag.name
       when 'a' || 'link'
+        binding.pry
         tag['href']
       when 'img' || 'frame' || 'iframe' || 'script' || 'source' || 'track'
         tag['src']

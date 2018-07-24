@@ -1,3 +1,4 @@
+require "colorize"
 require_relative 'linkchecker/parser'
 
 class LinkChecker
