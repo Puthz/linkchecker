@@ -1,11 +1,11 @@
-require_relative 'linkchecker/parser'
-require_relative 'linkchecker/reporter'
-require_relative 'linkchecker/resolver'
+require_relative "linkchecker/parser"
+require_relative "linkchecker/reporter"
+require_relative "linkchecker/resolver"
 
 class LinkChecker
   def initialize(url, parser: nil)
     @url = url
-    @parser = parser ||  Parser.new(@url)
+    @parser = parser || Parser.new(@url)
     @reporter = Reporter.new(@url)
   end
 

@@ -21,4 +21,3 @@ class Reporter
     end
   end
 end
-  
