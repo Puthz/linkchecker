@@ -1,29 +1,19 @@
 require_relative 'linkchecker/parser'
+require_relative 'linkchecker/reporter'
+require_relative 'linkchecker/resolver'
 
 class LinkChecker
-  def initialize(url)
-    @url_code = []
+  def initialize(url, parser: nil)
     @url = url
-    @parser = Parser.new(@url)
+    @parser = parser ||  Parser.new(@url)
+    @reporter = Reporter.new(@url)
   end
 
   def run
-    puts @url.to_s.yellow
+    @reporter.run
     @parser.run.each do |url|
-      code = HTTParty.get(url).code
-      show(url, code)
-      @url_code << { url: url, code: code }
+      result = Resolver.new(url).run
+      @reporter.report(result)
     end
-    @url_code
-  end
-
-  def show(url, code)
-    if code < 300
-      puts code.to_s.green + "\t" + url
-    elsif code < 400
-      puts code.to_s.yellow + "\t" + url
-    else
-      puts code.to_s.red + "\t" + url
-     end
   end
 end
